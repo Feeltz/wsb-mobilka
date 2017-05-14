@@ -7,4 +7,9 @@ using System.Threading.Tasks;
 namespace wsb_mobilka
 {
     public enum Gender { Male, Felamle, None }
+    public enum NotifyType
+    {
+        StatusMessage,
+        ErrorMessage
+    };
 }

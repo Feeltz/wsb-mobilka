@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="wsb_mobilka.Views.EmotionsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:wsb_mobilka.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Pivot>
+            <PivotItem Header="Your Emotions">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Image Name="FaceImage" Stretch="UniformToFill"  Margin="20" Source="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg"/>
+
+                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Name="BestEmotionTextBlock" Text="BestEmotionTextBlock"/>
+                    
+
+
+                    <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Name="TakePhotoButton" Content="Take Photo and get your emotions!"/>
+                </Grid>
+
+
+            </PivotItem>
+            <PivotItem Header="Detailed Emotions">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Name="InnerGrid2" Grid.Column="0" Margin="10" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Hapiness: " Grid.Column="0" Grid.Row="0" Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Name="HapinessTextBlock" Grid.Column="1" Grid.Row="0" Margin="10,0" MinWidth="150"/>
+
+                        <TextBlock Text="Sadness: " Grid.Column="0" Grid.Row="1" Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Name="SadnessTextBlock" Grid.Column="1" Grid.Row="1" Margin="10,0" MinWidth="150"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Surprise: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Name="SurpriseTextBlock" Margin="10,0" MinWidth="150"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Nautral: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Name="NautralTextBlock" Margin="10,0" MinWidth="150"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Anger: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4" Name="AngerTextBlock" Margin="10,0" MinWidth="150"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Contempt: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="5" Name="ContemptTextBlock" Margin="10,0" MinWidth="150"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="Disgust: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="6" Name="DisgustTextBlock" Margin="10,0" MinWidth="150"/>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="7" Text="Fear: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="7" Name="FearTextBlock" Margin="10,0" MinWidth="150"/>
+                    </Grid>
+
+                    <Image Grid.Column="1" Name="EmotionIcon" Stretch="Fill"  Margin="20" Source="\Assets\Emoji\emojiHappy.png"/>
+
+                </Grid>
+            </PivotItem>
+
+
+            <PivotItem Header="Your Location">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <maps:MapControl x:Name="myMap" Grid.Column="0"
+                                     Margin="20"
+                                     ZoomLevel="12"
+                                     Heading="0"
+                                     DesiredPitch="0" 
+                                     Loaded="MyMap_Loaded"
+                                     />
+                    <StackPanel Margin="20" Grid.Column="1">
+                        <TextBlock Name="NaviX"/>
+                        <TextBlock Name="NaviY"/>
+                        <TextBlock Name="Accuracy"/>
+                        <TextBlock Name="ScenarioOutput_Status"/>
+                        <Button Name="RefreshPositionButton" Content="Refresh Position" Click="RefreshPosition"/>
+                        <TextBlock Name="LocationDisabledMessage" Text="Location i Disabled on this Device" Visibility="Collapsed"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>
