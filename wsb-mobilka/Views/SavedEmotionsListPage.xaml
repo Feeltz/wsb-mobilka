@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="wsb_mobilka.Views.SavedEmotionsListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:wsb_mobilka.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListBox x:Name="ListBox" Grid.Row="1" Background="{x:Null}" Foreground="#FFF7F7F7" ItemsSource="{Binding AdvertList}" SelectionChanged="OnSelectedItem">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="10" Height="80" Width="80" Stretch="Fill" Source="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg"/>
+                        <StackPanel Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Emotion: " FontSize="20"/>
+                                <TextBlock Text="WWWWWWWW" FontSize="20"/>
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Lon: 1325"/>
+                                <TextBlock Text="Lat: 555"/>
+                            </StackPanel>
+                            <TextBlock Text="Data"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        
+    </Grid>
+</Page>

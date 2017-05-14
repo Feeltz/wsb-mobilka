@@ -5,10 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
-namespace wsb_mobilka.Models
+namespace wsb_mobilka
 {
+    
+
     public class EmotionsData
     {
+        
+
         public double Hapiness { get; set; }
         public double Sadness { get; set; }
         public double Suprise { get; set; }
@@ -22,5 +26,8 @@ namespace wsb_mobilka.Models
         public string BestEmotionName { get; set; }
 
         public Geoposition position { get; set; }
+
+        
+    
     }
 }

@@ -12,4 +12,15 @@ namespace wsb_mobilka
         StatusMessage,
         ErrorMessage
     };
+    public enum Emotionaaaa
+    {
+        Happiness,
+        Sadness,
+        Suprise,
+        Neutral,
+        Anger,
+        Contempt,
+        Disgust,
+        Fear
+    };
 }

@@ -20,13 +20,13 @@
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Image Name="FaceImage" Stretch="UniformToFill"  Margin="20" Source="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg"/>
+                    <Image Name="FaceImage" Stretch="UniformToFill"  Margin="20"/>
 
-                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Name="BestEmotionTextBlock" Text="BestEmotionTextBlock"/>
+                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Name="BestEmotionTextBlock" Text="Your Are?" FontSize="25"/>
                     
 
 
-                    <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Name="TakePhotoButton" Content="Take Photo and get your emotions!"/>
+                    <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Name="TakePhotoButton" Content="Take Photo and get your emotions!" Click="TakePhotoButton_Click"/>
                 </Grid>
 
 
@@ -54,31 +54,31 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="Hapiness: " Grid.Column="0" Grid.Row="0" Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Name="HapinessTextBlock" Grid.Column="1" Grid.Row="0" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Name="HapinessTextBlock" Text="0 %" Margin="5" Grid.Column="1" Grid.Row="0" MinWidth="150"/>
 
                         <TextBlock Text="Sadness: " Grid.Column="0" Grid.Row="1" Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Name="SadnessTextBlock" Grid.Column="1" Grid.Row="1" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Name="SadnessTextBlock" Text="0 %" Grid.Column="1" Grid.Row="1" Margin="5" MinWidth="150"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Surprise: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Name="SurpriseTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0 %" Name="SurpriseTextBlock" Margin="5" MinWidth="150"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Nautral: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="3" Name="NautralTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="0 %" Name="NeutralTextBlock" Margin="5" MinWidth="150"/>
                         
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="Anger: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="4" Name="AngerTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4" Text="0 %" Name="AngerTextBlock" Margin="5" MinWidth="150"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Contempt: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="5" Name="ContemptTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="5" Text="0 %" Name="ContemptTextBlock" Margin="5" MinWidth="150"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="6" Text="Disgust: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="6" Name="DisgustTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="6" Text="0 %" Name="DisgustTextBlock" Margin="5" MinWidth="150"/>
                         
                         <TextBlock Grid.Column="0" Grid.Row="7" Text="Fear: " Margin="0,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.Row="7" Name="FearTextBlock" Margin="10,0" MinWidth="150"/>
+                        <TextBlock Grid.Column="1" Grid.Row="7" Text="0 %" Name="FearTextBlock" Margin="5" MinWidth="150"/>
                     </Grid>
 
-                    <Image Grid.Column="1" Name="EmotionIcon" Stretch="Fill"  Margin="20" Source="\Assets\Emoji\emojiHappy.png"/>
+                    <Image Grid.Column="1" Name="EmotionIcon" Stretch="Uniform"  Margin="20" Source="\Assets\Emoji\emojiHappy.png"/>
 
                 </Grid>
             </PivotItem>
@@ -91,18 +91,23 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <maps:MapControl x:Name="myMap" Grid.Column="0"
-                                     Margin="20"
+                                     Margin="2"
                                      ZoomLevel="12"
                                      Heading="0"
                                      DesiredPitch="0" 
                                      Loaded="MyMap_Loaded"
                                      />
                     <StackPanel Margin="20" Grid.Column="1">
-                        <TextBlock Name="NaviX"/>
-                        <TextBlock Name="NaviY"/>
-                        <TextBlock Name="Accuracy"/>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Latitude: " Margin="5"/>
+                            <TextBlock Name="NaviX" Margin="5"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Longitude: " Margin="5"/>
+                            <TextBlock Name="NaviY" Margin="5"/>
+                        </StackPanel>
                         <TextBlock Name="ScenarioOutput_Status"/>
-                        <Button Name="RefreshPositionButton" Content="Refresh Position" Click="RefreshPosition"/>
+                        <Button Margin="5" Name="RefreshPositionButton" Content="Refresh Position" Click="RefreshPosition"/>
                         <TextBlock Name="LocationDisabledMessage" Text="Location i Disabled on this Device" Visibility="Collapsed"/>
 
                     </StackPanel>

@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -20,12 +24,16 @@ namespace wsb_mobilka.Views
         private Geolocator _geolocator = null;
         private Geoposition currentPosition;
         private MainPage _rootPage = MainPage.Current;
+        private CognitiveController controler;
+        RandomAccessStreamReference mapIconStreamReference;
 
         public EmotionsView()
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            controler = new CognitiveController();
+            mapIconStreamReference = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/MapPin.png"));
         }
 
         #region Navigation
@@ -69,25 +77,50 @@ namespace wsb_mobilka.Views
         }
         #endregion
 
-        private void UpdateLocationData(Geoposition position)
-        {
-            if (position == null)
-            {
-                NaviX.Text = "No data";
-                NaviY.Text = "No data";
-                Accuracy.Text = "No data";
-            }
-            else
-            {
-                NaviX.Text = position.Coordinate.Point.Position.Latitude.ToString();
-                NaviY.Text = position.Coordinate.Point.Position.Longitude.ToString();
-                Accuracy.Text = position.Coordinate.Accuracy.ToString();
-            }
-        }
 
         private async void RefreshPosition(object sender, RoutedEventArgs e)
         {
             await _checkPosition();
+        }     
+
+        private void MyMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            _checkPosition();
+        }
+
+        private async void TakePhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+            FaceImage.Source = await controler.TakePicture();
+            var emotions = await controler.DetectEmotions();
+
+            _setEmotionsToInterface(emotions);
+        }
+
+
+
+
+        private void _setEmotionsToInterface(Microsoft.ProjectOxford.Common.Contract.EmotionScores emotions)
+        {
+            HapinessTextBlock.Text = Math.Round((double)(emotions.Happiness) * 100, 4) + " %";
+            SadnessTextBlock.Text = Math.Round((double)(emotions.Sadness) * 100, 4) + " %";
+            SurpriseTextBlock.Text = Math.Round((double)(emotions.Surprise) * 100, 4) + " %";
+            NeutralTextBlock.Text = Math.Round((double)(emotions.Neutral) * 100, 4) + " %";
+            AngerTextBlock.Text = Math.Round((double)(emotions.Anger) * 100, 4) + " %";
+            ContemptTextBlock.Text = Math.Round((double)(emotions.Contempt) * 100, 4) + " %";
+            DisgustTextBlock.Text = Math.Round((double)(emotions.Disgust) * 100, 4) + " %";
+            FearTextBlock.Text = Math.Round((double)(emotions.Fear) * 100, 4) + " %";
+
+            var bestEmotion = emotions.ToRankedList().FirstOrDefault().Key;
+            BestEmotionTextBlock.Text = $"You are {bestEmotion}!";
+
+            _setEmotionIcon(bestEmotion);
+        }
+
+        private void _setEmotionIcon(string bestEmotion)
+        {
+            Emotionaaaa tmpEmot = (Emotionaaaa)Enum.Parse(typeof(Emotionaaaa), bestEmotion, true);
+            string pictureUrl = @"ms-appx:/Assets/Emoji/" + controler.EmojiDictionary[tmpEmot].ToString();
+            EmotionIcon.Source = new BitmapImage(new Uri(pictureUrl, UriKind.Absolute));
         }
 
         private async Task _checkPosition()
@@ -101,7 +134,7 @@ namespace wsb_mobilka.Views
                     _geolocator.DesiredAccuracyInMeters = 50;
                     currentPosition = await _geolocator.GetGeopositionAsync();
 
-                    UpdateLocationData(currentPosition);
+                    _updateLocationData(currentPosition);
                     _setCurrentPositionToMap(currentPosition);
                     break;
 
@@ -123,13 +156,38 @@ namespace wsb_mobilka.Views
 
             myMap.Center = geoPos;
             myMap.ZoomLevel = 14;
+            _setPinOnMap(geoPos);
         }
 
-        private void MyMap_Loaded(object sender, RoutedEventArgs e)
+        private void _updateLocationData(Geoposition position)
         {
-            _checkPosition();
+            if (position == null)
+            {
+                NaviX.Text = "No data";
+                NaviY.Text = "No data";
+            }
+            else
+            {
+                NaviX.Text = position.Coordinate.Point.Position.Latitude.ToString();
+                NaviY.Text = position.Coordinate.Point.Position.Longitude.ToString();
+            }
         }
 
-        
+        private void _setPinOnMap(Geopoint pos)
+        {
+            MapIcon mapIcon1 = new MapIcon();
+            Geopoint geoPos = pos;
+            mapIcon1.Location = geoPos;
+            mapIcon1.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            mapIcon1.Title = "My Position";
+            mapIcon1.Image = mapIconStreamReference;
+            mapIcon1.ZIndex = 0;
+
+            if(myMap.MapElements.Count>0)
+            {
+                myMap.MapElements.Remove(myMap.MapElements.FirstOrDefault());
+            }
+            myMap.MapElements.Add(mapIcon1);
+        }
     }
 }
