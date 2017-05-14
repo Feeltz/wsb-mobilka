@@ -9,5 +9,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <HyperlinkButton  Name="UserProfileButton" Content="To User Profile" Click="UserProfileButton_Click" />
     </Grid>
 </Page>
