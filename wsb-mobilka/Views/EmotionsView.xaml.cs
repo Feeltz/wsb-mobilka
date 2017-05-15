@@ -11,20 +11,15 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace wsb_mobilka.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class EmotionsView : Page
     {
 
         private Geolocator _geolocator = null;
         private Geoposition currentPosition;
         private MainPage _rootPage = MainPage.Current;
-        private CognitiveController controler;
+        private CognitiveController cognitiveController;
         RandomAccessStreamReference mapIconStreamReference;
 
         public EmotionsView()
@@ -32,7 +27,7 @@ namespace wsb_mobilka.Views
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
-            controler = new CognitiveController();
+            cognitiveController = new CognitiveController();
             mapIconStreamReference = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/MapPin.png"));
         }
 
@@ -90,10 +85,18 @@ namespace wsb_mobilka.Views
 
         private async void TakePhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            FaceImage.Source = await controler.TakePicture();
-            var emotions = await controler.DetectEmotions();
+            FaceImage.Source = await cognitiveController.TakePicture();
+            var emotions = await cognitiveController.DetectEmotions();
 
-            _setEmotionsToInterface(emotions);
+            if (emotions != null)
+            {
+                _setEmotionsToInterface(emotions);
+                await _checkPosition();
+
+                MainController mainController = new MainController();
+                string photoFileName = await mainController.SavePictureToFolder(cognitiveController.Photo);
+                mainController.SaveCurrentEmotionsToFolder(emotions, currentPosition, photoFileName);
+            }
         }
 
 
@@ -119,7 +122,7 @@ namespace wsb_mobilka.Views
         private void _setEmotionIcon(string bestEmotion)
         {
             Emotionaaaa tmpEmot = (Emotionaaaa)Enum.Parse(typeof(Emotionaaaa), bestEmotion, true);
-            string pictureUrl = @"ms-appx:/Assets/Emoji/" + controler.EmojiDictionary[tmpEmot].ToString();
+            string pictureUrl = @"ms-appx:/Assets/Emoji/" + cognitiveController.EmojiDictionary[tmpEmot].ToString();
             EmotionIcon.Source = new BitmapImage(new Uri(pictureUrl, UriKind.Absolute));
         }
 

@@ -19,13 +19,18 @@ namespace wsb_mobilka
     public class CognitiveController
     {
         private readonly EmotionServiceClient emotionServiceClient = new EmotionServiceClient("dc67427c656c41899ccd6ce3891cbb02"); // AZURE
-        private StorageFile photo;
+        public StorageFile Photo { get; private set; }
         public Dictionary<Emotionaaaa, string> EmojiDictionary { get; set; }
 
         public async Task<EmotionScores> DetectEmotions()
         {
             Emotion[] emotionResult;
-            var storageFile = photo;
+
+            if (Photo == null)
+            {
+                return null;
+            }
+            var storageFile = Photo;
             
             var randomAccessStream = await storageFile.OpenReadAsync();
             emotionResult = await emotionServiceClient.RecognizeAsync(randomAccessStream.AsStream());
@@ -58,16 +63,16 @@ namespace wsb_mobilka
             captureUI.PhotoSettings.AllowCropping = true;
 
             // nasza apka czeka, na zrobienie zdjęcia prze aplikację CameraCaptureUI
-            photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            Photo = await captureUI.CaptureFileAsync(CameraCaptureUIMode.Photo);
 
-            if (photo == null)
+            if (Photo == null)
             {
                 // Gdy klikniemy cancel na aplikacji do robienia zdjęć
                 return null;
             }
 
             // ciąg bitów ze zdjęcia
-            IRandomAccessStream stream = await photo.OpenAsync(FileAccessMode.Read);
+            IRandomAccessStream stream = await Photo.OpenAsync(FileAccessMode.Read);
             // dekodujemy na bitmapę
             BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
             // zmieniamy rodzaj bitmapy na software

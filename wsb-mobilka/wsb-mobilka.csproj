@@ -97,10 +97,13 @@
     </Compile>
     <Compile Include="Controllers\CognitiveController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\SerializationController.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmotionMainClass.cs" />
+    <Compile Include="Models\EmotionsDataWithPicture.cs" />
     <Compile Include="Models\EmotionsData.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

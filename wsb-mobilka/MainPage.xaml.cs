@@ -107,5 +107,10 @@ namespace wsb_mobilka
         {
             this.Frame.Navigate(typeof(Views.EmotionsView), user);
         }
+
+        private void SavedEmotionsListPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Views.SavedEmotionsListPage), user);
+        }
     }
 }

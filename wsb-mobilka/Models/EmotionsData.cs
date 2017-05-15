@@ -9,25 +9,14 @@ namespace wsb_mobilka
 {
     
 
-    public class EmotionsData
+    public class EmotionsData: EmotionMainClass
     {
-        
 
-        public double Hapiness { get; set; }
-        public double Sadness { get; set; }
-        public double Suprise { get; set; }
-        public double Neutral { get; set; }
-        public double Anger { get; set; }
-        public double Contempt { get; set; }
-        public double Disgust { get; set; }
-        public double Fear { get; set; }
-
-        public double BestEmotionScore { get; set; }
-        public string BestEmotionName { get; set; }
-
-        public Geoposition position { get; set; }
-
-        
-    
+        //public Geoposition position { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public DateTime DateTaken { get; set; }
+        public string PhotoFileName { get; set; }
+   
     }
 }

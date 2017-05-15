@@ -8,23 +8,32 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListBox x:Name="ListBox" Grid.Row="1" Background="{x:Null}" Foreground="#FFF7F7F7" ItemsSource="{Binding AdvertList}" SelectionChanged="OnSelectedItem">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--<Button Grid.Column="1" Name="LoadObjectsButton" Content="Load Objects" Click="LoadObjectsButton_Click"/>-->
+        <TextBlock Name="TextBlockEmotion" Text="{Binding Path=EmotionsText, Mode=OneWay}" Grid.Column="1" Margin="20"/>
+        
+        <ListBox x:Name="ListBox" Grid.Column="0" Background="{x:Null}" Foreground="#FFF7F7F7" ItemsSource="{Binding observableCollection}" SelectionChanged="OnSelectedItem">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="10" Height="80" Width="80" Stretch="Fill" Source="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg"/>
+                        <Image Margin="10" Height="80" Width="80" Stretch="Fill" Source="{Binding PhotoSource}"/>
                         <StackPanel Margin="10">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Emotion: " FontSize="20"/>
-                                <TextBlock Text="WWWWWWWW" FontSize="20"/>
+                                <TextBlock Text="Emotion: " FontSize="20" Margin="2"/>
+                                <TextBlock Text="{Binding BestEmotionName}" FontSize="20" Margin="2"/>
                             </StackPanel>
-                            
-                            <StackPanel Orientation="Horizontal">
 
-                                <TextBlock Text="Lon: 1325"/>
-                                <TextBlock Text="Lat: 555"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Latitude: " Margin="2"/>
+                                <TextBlock Text="{Binding Latitude}" Margin="2"/>
+                                <TextBlock Text="Longitude: " Margin="2"/>
+                                <TextBlock Text="{Binding Longitude}" Margin="2"/>
                             </StackPanel>
-                            <TextBlock Text="Data"/>
+                            <TextBlock Text="{Binding DateTaken}"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

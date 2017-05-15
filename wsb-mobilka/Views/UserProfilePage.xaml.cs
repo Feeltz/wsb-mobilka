@@ -29,8 +29,7 @@ namespace wsb_mobilka.Views
         public UserProfilePage()
         {
             this.InitializeComponent();
-            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested +=
-    App_BackRequested;
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             user = new UserProfile();
             var _enumval = Enum.GetValues(typeof(Gender)).Cast<Gender>();
