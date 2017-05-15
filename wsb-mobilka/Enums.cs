@@ -16,7 +16,7 @@ namespace wsb_mobilka
     {
         Happiness,
         Sadness,
-        Suprise,
+        Surprise,
         Neutral,
         Anger,
         Contempt,

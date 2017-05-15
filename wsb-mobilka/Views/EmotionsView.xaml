@@ -23,7 +23,7 @@
                     <Image Name="FaceImage" Stretch="UniformToFill"  Margin="20"/>
 
                     <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Name="BestEmotionTextBlock" Text="Your Are?" FontSize="25"/>
-                    
+                    <ProgressRing Name="progRing" Grid.Column="1" Visibility="Visible" Width="150" Height="150"/>
 
 
                     <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Name="TakePhotoButton" Content="Take Photo and get your emotions!" Click="TakePhotoButton_Click"/>

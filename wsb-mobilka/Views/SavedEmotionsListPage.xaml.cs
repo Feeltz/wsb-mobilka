@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media.Imaging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -62,20 +63,82 @@ namespace wsb_mobilka.Views
         public SavedEmotionsListPage()
         {
             this.InitializeComponent();
+            SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
+            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+
             observableCollection = new ObservableCollection<EmotionsDataWithPicture>();
             printEmotionClass = new PrintEmotionClass();
+
+            TextBlockEmotion.DataContext = printEmotionClass;
 
             ListBox.ItemsSource = null;
             ListBox.ItemsSource = observableCollection;
             LoadEmotionsDataToListView();
 
-            TextBlockEmotion.DataContext = printEmotionClass;
         }
+
+        #region Navigation
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+                return;
+
+            // Navigate back if possible, and if the event has not 
+            // already been handled .
+            if (rootFrame.CanGoBack && e.Handled == false)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            string myPages = "";
+            foreach (PageStackEntry page in rootFrame.BackStack)
+            {
+                myPages += page.SourcePageType.ToString() + "\n";
+            }
+
+            if (rootFrame.CanGoBack)
+            {
+                // Show UI in title bar if opted-in and in-app backstack is not empty.
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    AppViewBackButtonVisibility.Visible;
+            }
+            else
+            {
+                // Remove the UI from the title bar if in-app back stack is empty.
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+        #endregion
 
         private void OnSelectedItem(object sender, SelectionChangedEventArgs e)
         {
-            double itemHapiness = observableCollection[this.ListBox.SelectedIndex].Hapiness;
-            printEmotionClass.EmotionsText = itemHapiness.ToString();
+            var item = observableCollection[this.ListBox.SelectedIndex];
+            string tmpString = "Your Emotions are : \n" +
+
+                "Happiness: " + Math.Round((double)(item.Hapiness) * 100, 4) + " %" + "\n" +
+
+                "Sadness: " + Math.Round((double)(item.Sadness) * 100, 4) + " %" + "\n" +
+
+                "Surprise: " + Math.Round((double)(item.Suprise) * 100, 4) + " %" + "\n" +
+
+                "Neutral: " + Math.Round((double)(item.Neutral) * 100, 4) + " %" + "\n" +
+
+                "Anger: " + Math.Round((double)(item.Anger) * 100, 4) + " %" + "\n" +
+
+                "Contempt: " + Math.Round((double)(item.Contempt) * 100, 4) + " %" + "\n" +
+
+                "Disgust: " + Math.Round((double)(item.Disgust) * 100, 4) + " %" + "\n" +
+
+                "Fear: " + Math.Round((double)(item.Fear) * 100, 4) + " %" + "\n";
+            printEmotionClass.EmotionsText = tmpString;
         }
 
         private void LoadObjectsButton_Click(object sender, RoutedEventArgs e)

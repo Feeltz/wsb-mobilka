@@ -44,7 +44,7 @@ namespace wsb_mobilka
             {
                 { Emotionaaaa.Happiness, "emojiHappy.png" },
                 { Emotionaaaa.Sadness, "emojiSad.png" },
-                { Emotionaaaa.Suprise, "emojiSuprised.png" },
+                { Emotionaaaa.Surprise, "emojiSuprised.png" },
                 { Emotionaaaa.Neutral, "emojiNautral.png" },
                 { Emotionaaaa.Contempt, "emojiContempt.png" },
                 { Emotionaaaa.Anger, "emojiAnger.png" },

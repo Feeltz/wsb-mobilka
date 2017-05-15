@@ -25,6 +25,7 @@ namespace wsb_mobilka.Views
     {
         public UserProfile user;
         MainController controler;
+        private bool isPictureTaken=false;
 
         public UserProfilePage()
         {
@@ -35,6 +36,7 @@ namespace wsb_mobilka.Views
             var _enumval = Enum.GetValues(typeof(Gender)).Cast<Gender>();
             GenderComboBox.ItemsSource = _enumval.ToList();
 
+            controler = new MainController();
             _loadPhotoFromStorage();
         }
 
@@ -86,11 +88,13 @@ namespace wsb_mobilka.Views
         private void SaveProfileButton_Click(object sender, RoutedEventArgs e)
         {
             _saveUserDataToLocalStore();
-            controler.SavePictureInLocalStorage();
+            if(isPictureTaken)
+                controler.SavePictureInLocalStorage();
         }
         private  void TakePhotoButton_Click(object sender, RoutedEventArgs e)
         {
             _takePhoto();
+            isPictureTaken = true;
         }
 
 
@@ -130,7 +134,6 @@ namespace wsb_mobilka.Views
         }
         private async void _loadPhotoFromStorage()
         {
-            controler = new MainController();
             FaceImage.Source = await controler.LoadPhotoFromStorage();
         }
 

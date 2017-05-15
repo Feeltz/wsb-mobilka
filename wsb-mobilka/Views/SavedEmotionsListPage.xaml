@@ -13,10 +13,9 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <!--<Button Grid.Column="1" Name="LoadObjectsButton" Content="Load Objects" Click="LoadObjectsButton_Click"/>-->
         <TextBlock Name="TextBlockEmotion" Text="{Binding Path=EmotionsText, Mode=OneWay}" Grid.Column="1" Margin="20"/>
         
-        <ListBox x:Name="ListBox" Grid.Column="0" Background="{x:Null}" Foreground="#FFF7F7F7" ItemsSource="{Binding observableCollection}" SelectionChanged="OnSelectedItem">
+        <ListBox x:Name="ListBox" Grid.Column="0" Background="{x:Null}" ItemsSource="{Binding observableCollection}" SelectionChanged="OnSelectedItem">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

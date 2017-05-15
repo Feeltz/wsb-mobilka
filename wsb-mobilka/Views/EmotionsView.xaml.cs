@@ -85,6 +85,7 @@ namespace wsb_mobilka.Views
 
         private async void TakePhotoButton_Click(object sender, RoutedEventArgs e)
         {
+            progRing.IsActive = true;
             FaceImage.Source = await cognitiveController.TakePicture();
             var emotions = await cognitiveController.DetectEmotions();
 
@@ -97,6 +98,7 @@ namespace wsb_mobilka.Views
                 string photoFileName = await mainController.SavePictureToFolder(cognitiveController.Photo);
                 mainController.SaveCurrentEmotionsToFolder(emotions, currentPosition, photoFileName);
             }
+            progRing.IsActive = false;
         }
 
 
