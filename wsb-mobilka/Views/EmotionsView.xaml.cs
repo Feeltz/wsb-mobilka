@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -93,11 +94,12 @@ namespace wsb_mobilka.Views
             {
                 _setEmotionsToInterface(emotions);
                 await _checkPosition();
-
+                progRing.IsActive = false;
                 MainController mainController = new MainController();
                 string photoFileName = await mainController.SavePictureToFolder(cognitiveController.Photo);
                 mainController.SaveCurrentEmotionsToFolder(emotions, currentPosition, photoFileName);
             }
+
             progRing.IsActive = false;
         }
 

@@ -13,7 +13,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="100">
+        <StackPanel Margin="40">
             <HyperlinkButton  Name="UserProfileButton" Content="To User Profile" Click="UserProfileButton_Click" />
             <HyperlinkButton  Name="EmotionsViewButton" Content="To Emotions View" Click="EmotionseButton_Click" />
             <HyperlinkButton  Name="SavedEmotionsListPageButton" Content="To Emotions List Page" Click="SavedEmotionsListPageButton_Click" />

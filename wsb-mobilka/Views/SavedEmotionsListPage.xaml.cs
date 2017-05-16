@@ -18,6 +18,10 @@ using Windows.UI.Xaml.Media.Imaging;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -64,7 +68,6 @@ namespace wsb_mobilka.Views
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().BackRequested += App_BackRequested;
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
             observableCollection = new ObservableCollection<EmotionsDataWithPicture>();
             printEmotionClass = new PrintEmotionClass();
@@ -76,6 +79,7 @@ namespace wsb_mobilka.Views
             LoadEmotionsDataToListView();
 
         }
+
 
         #region Navigation
         private void App_BackRequested(object sender, BackRequestedEventArgs e)
@@ -150,17 +154,28 @@ namespace wsb_mobilka.Views
         {
             EmotionsDataWithPicture emotionItem;
             MainController mainController = new MainController();
-            StorageFolder filesFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("EmotionDataFolder");
-            var allFiles = await filesFolder.GetFilesAsync();
-            foreach (var file in allFiles)
+            try
             {
-                var emotionFile = await mainController.LoadEmotionFromFolder(file.Name);
-                StorageFile photoFile = await mainController.LoadPictureFromFolder(emotionFile.PhotoFileName);
-                SoftwareBitmapSource photoSource = await mainController.GetBitmapSourceFromFile(photoFile);
-                emotionItem = new EmotionsDataWithPicture(emotionFile);
-                emotionItem.PhotoSource = photoSource;
-                observableCollection.Add(emotionItem);
+                StorageFolder filesFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("EmotionDataFolder");
+                var allFiles = await filesFolder.GetFilesAsync();
+                foreach (var file in allFiles)
+                {
+                    var emotionFile = await mainController.LoadEmotionFromFolder(file.Name);
+                    StorageFile photoFile = await mainController.LoadPictureFromFolder(emotionFile.PhotoFileName);
+                    SoftwareBitmapSource photoSource = await mainController.GetBitmapSourceFromFile(photoFile);
+                    emotionItem = new EmotionsDataWithPicture(emotionFile);
+                    emotionItem.PhotoSource = photoSource;
+                    observableCollection.Add(emotionItem);
+                }
             }
+            catch
+            {
+
+            }
+            //emotionItem = new EmotionsDataWithPicture();
+            //emotionItem.Sadness = 5;
+            //emotionItem.BestEmotionName = "Sadness";
+            //observableCollection.Add(emotionItem);
         }
     }
 }

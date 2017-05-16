@@ -19,7 +19,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Margin="10" Height="80" Width="80" Stretch="Fill" Source="{Binding PhotoSource}"/>
+                        <Image Margin="10" Height="80" Width="80" Stretch="UniformToFill" Source="{Binding PhotoSource}"/>
                         <StackPanel Margin="10">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Emotion: " FontSize="20" Margin="2"/>
