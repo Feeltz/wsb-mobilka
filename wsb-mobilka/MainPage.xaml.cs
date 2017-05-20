@@ -37,7 +37,6 @@ namespace wsb_mobilka
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(Views.UserProfilePage),user);
         }
 
         private void _loadUserDataFromLocalStore()
@@ -111,6 +110,17 @@ namespace wsb_mobilka
         private void SavedEmotionsListPageButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Views.SavedEmotionsListPage), user);
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EnterProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+            this.Frame.Navigate(typeof(Views.UserProfilePage), user);
         }
     }
 }
